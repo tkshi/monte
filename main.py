@@ -5,14 +5,17 @@ import random
 
 class Hand:
     hand = []
-    def __init__(self):
-        self.draw()
-        self.draw()
-        self.draw()
+    def __init__(self,*args):
+        if not len(args) == 1:
+            self.draw()
+            self.draw()
+            self.draw()
+        else:
+            self.hand = args[0]
     def getHand(self):
-        return self.hand
+        return sorted(self.hand)
     def draw(self):
-        if(len(self.hand) == 3):
+        if(len(self.hand) <= 3):
             num = random.randint(1,9)
             self.hand.append(num)
             return self.hand
@@ -22,40 +25,31 @@ class Hand:
     def check(self):
         prev_num = 0
         match_count = 0
-        sorted_array = sorted(self.hand)
+        singled_array = list(set(self.hand))
+        singled_array = sorted(singled_array)
         result = False
-        singled_array = list(set(sorted_array))
-        for h in singled_array:
-
-            if(prev_num == h - 1 and prev_num != 0):
-                match_count = match_count + 1
-                if(match_count == 2):
+        hand_length = len(singled_array)
+        for i in range(0,hand_length):
+            if(i + 2 < hand_length):
+                if singled_array[i] == singled_array[i + 1] -1 == singled_array[i + 2] -2:
                     result = True
             else:
-                match_count = 0
-            prev_num = h
+                break
         return result
 
 if __name__ == '__main__':
     hand = Hand()
-    hand_array = hand.getHand()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
-    hand.draw()
     hand.getHand()
-    print(hand.check())
+    success = False
+    while not success:
+        hand.draw()
+        print(hand.check())
+        if hand.check() is True:
+            success = True
+            break
+        print(hand.getHand())
+        print("なにを切りますか？")
+        num = raw_input()
+        hand.trash(int(num))
+    print(hand.getHand())
+    print("成功です")
