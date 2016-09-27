@@ -24,7 +24,7 @@ class TestStringMethods(unittest.TestCase):
         hand_length = len(hand.getHand())
     def test_get_cleared_array(self):
         hand = Hand(initial=[1,2,7,8,9,2,2],mode="playout")
-        result = hand.get_cleared_part()
+        result = hand.get_cleared_part()[0]
         self.assertEqual(len(result),3)
         self.assertEqual(int(result[0]),int(result[1]) - 1)
         self.assertEqual(int(result[1]),int(result[2]) - 1)
@@ -32,9 +32,17 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(int(result[1]),8)
         self.assertEqual(int(result[2]),9)
     def test_montecalro(self):
-        monte = Monte([1,9,8,3])
+        monte = Monte([1,2,8,9])
         monte.what_trash()
-        self.assertEqual(monte.what_trash(),9)
+        self.assertTrue(monte.what_trash() in [1,9])
+    def test_montecalro_is_nine(self):
+        monte = Monte([1,2,8,7])
+        monte.what_trash()
+        self.assertEqual(monte.what_trash(),1)
+    def test_montecalro_is_nine(self):
+        monte = Monte([2,3,5,6])
+        monte.what_trash()
+        self.assertEqual(monte.what_trash(),2)
 
   #
   # def test_isupper(self):

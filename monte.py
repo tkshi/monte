@@ -7,7 +7,7 @@ while not hand.check():
 
 class Monte:
     def __init__(self,hand):
-        self.playout_count = 400
+        self.playout_count = 600
         self.origin_hand = hand
         self.hand = Hand(initial=self.origin_hand,mode='playout')
         self.score_dic = {}
@@ -20,14 +20,14 @@ class Monte:
     def start_playout(self):
         for i in range(self.playout_count):
             self.playout()
-    def set_score_dic(self,comp_part):
+    def set_score_dic(self,comp_parts):
         _origin_hand = self.origin_hand[:]
-
-        for h in _origin_hand:
-            if h in comp_part:
-                comp_part.remove(h)
-            else:
-                self.score_dic[h] = self.score_dic.get(h,0) + 1
+        for comp_part in comp_parts:
+            for h in _origin_hand:
+                if h in comp_part:
+                    comp_part.remove(h)
+                else:
+                    self.score_dic[h] = self.score_dic.get(h,0) + 1
     def what_trash(self):
         self.start_playout()
         print(self.score_dic)
