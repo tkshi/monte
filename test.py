@@ -1,5 +1,6 @@
 import unittest
 from main import Hand
+from monte import Monte
 
 class TestStringMethods(unittest.TestCase):
     def test_check_hand_count(self):
@@ -30,6 +31,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(int(result[0]),7)
         self.assertEqual(int(result[1]),8)
         self.assertEqual(int(result[2]),9)
+    def test_montecalro(self):
+        monte = Monte([1,9,8,3])
+        monte.what_trash()
+        self.assertEqual(monte.what_trash(),9)
 
   #
   # def test_isupper(self):
